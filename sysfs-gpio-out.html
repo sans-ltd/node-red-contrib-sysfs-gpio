@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="opi_out">
+<script type="text/x-red" data-template-name="sysfs_gpio_out">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i>Pin-Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -211,7 +211,7 @@
   
 </script>
 
-<script type="text/x-red" data-help-name="opi_out">
+<script type="text/x-red" data-help-name="sysfs_gpio_out">
     <p>GPIO output node for OrangePi and others..</p>
     <p>All GPIO-pins are available, regardless of their multiplex functions.</p>
     <p>Therefore, user is responsible to not disturb alternate pin functions.</p>
@@ -219,7 +219,7 @@
 </script>
 
 <script type="text/javascript">
- RED.nodes.registerType('opi_out',{
+ RED.nodes.registerType('sysfs_gpio_out',{
         category: 'Orange Pi',
         color: '#FFCC66',
         defaults: {

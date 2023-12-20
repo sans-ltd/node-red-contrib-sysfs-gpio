@@ -2,7 +2,7 @@ var Gpio = require('onoff').Gpio;
 
 module.exports = function(RED) {
   "use strict";  
-  function opiInNode(config){
+  function sysfsGpioInNode(config){
     RED.nodes.createNode(this,config);
     var node = this;
     var monitoringPin;
@@ -61,5 +61,5 @@ module.exports = function(RED) {
       monitoringPin.unexport();
     })
   }
-  RED.nodes.registerType("opi_in",opiInNode);  
+  RED.nodes.registerType("sysfs_gpio_in",sysfsGpioInNode);  
 }
