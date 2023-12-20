@@ -1,0 +1,398 @@
+<script type="text/x-red" data-template-name="opi_out">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Pin-Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <br>
+        <label for=""><i class="fa fa-tag"></i> Pi type</label>
+        <select type="text" id="node-input-select">
+            <option value="other">Other </option>
+            <option value="PC">OrangePi PC</option>
+            <option value="M1">BananaPi M1</option>
+            <option value="M2p">BananaPi M2 Plus</option>
+            <option value="OPZ">OrangePi Zero (Plus)</option>
+            <option value="Neo">NanoPi Neo</option>
+            <option value="OPZP2">Orange Pi Zero Plus 2</option>
+        </select>
+        <input type="hidden" id="node-input-type">
+    </div>
+
+    <div class="form-tips" id="node-tip">
+      Please define your GPIO number. This are the rules:
+      <table border="1"  cellpadding="2">
+        <tr><td><strong>CPU Port</strong></td><td><strong>GPIO-number</strong></td></tr>
+        <tr><td>PA0..PA31</td><td>0..31</td></tr>
+        <tr><td>PB0..PB31</td><td>32..63</td></tr>
+        <tr><td>PC0..PC31</td><td>64..95</td></tr>
+        <tr><td>Pxy..</td><td>x*32+y</td></tr>
+      </table>
+    </div>
+
+    <div class="form-row">
+         <br>
+        <input type="hidden" id="node-input-pin">               <!-- This is the place where phys. pin number is stored  -->
+        <label><i class="fa fa-tag"></i> Output pin</label> 
+        <select type="text" id="node-input-pin1" style="width: 250px;" name="OPI_PC">
+            <option value='' disabled selected style='display:none;'>select pin</option>
+            <option value="12">Pin 3 - PA12</option>
+            <option value="11">Pin 5 - PA11</option>
+            <option value="6">Pin 7 - PA6</option>
+            <option value="13">Pin 8 - PA13</option>
+            <option value="14">Pin 10 - PA14</option>
+            <option value="1">Pin 11 - PA1</option>
+            <option value="14">Pin 12 - PD14</option>
+            <option value="0">Pin 13 - PA0</option>
+            <option value="3">Pin 15 - PA3</option>
+            <option value="68">Pin 16 - PC4</option>
+            <option value="71">Pin 18 - PC7</option>
+            <option value="64">Pin 19 - PC0</option>
+            <option value="65">Pin 21 - PC1</option>
+            <option value="2">Pin 22 - PA2</option>
+            <option value="66">Pin 23 - PC2</option>
+            <option value="67">Pin 24 - PC3</option>
+            <option value="21">Pin 26 - PA21</option>
+            <option value="19">Pin 27 - PA19</option>
+            <option value="18">Pin 28 - PA18</option>
+            <option value="7">Pin 29 - PA7</option>
+            <option value="8">Pin 31 - PA8</option>
+            <option value="200">Pin 32 - PG8</option>
+            <option value="9">Pin 33 - PA9</option>
+            <option value="10">Pin 35 - PA10</option>
+            <option value="201">Pin 36 - PG9</option>
+            <option value="20">Pin 37 - PA20</option>
+            <option value="198">Pin 38 - PG6</option>
+            <option value="199">Pin 40 - PG7</option>
+         </select>
+
+         <input type="text" id="node-input-pin2" style="width: 50px;" value="0" name="other">
+
+        <select type="text" id="node-input-pin3" style="width: 250px;" name="Banana M1">
+            <option value='' disabled selected style='display:none;'>select pin</option>
+            <option value="53">Pin 3 - PB21</option>
+            <option value="52">Pin 5 - PB20</option>
+            <option value="259">Pin 7 - PI3</option>
+            <option value="224">Pin 8 - PH0</option>
+            <option value="225">Pin 10 - PH1</option>
+            <option value="275">Pin 11 - PI19</option>
+            <option value="226">Pin 12 - PH2</option>
+            <option value="274">Pin 13 - PI18</option>
+            <option value="273">Pin 15 - PI17</option>
+            <option value="244">Pin 16 - PH20</option>
+            <option value="245">Pin 18 - PH21</option>
+            <option value="268">Pin 19 - PI12</option>
+            <option value="269">Pin 21 - PI13</option>
+            <option value="272">Pin 22 - PI16</option>
+            <option value="267">Pin 23 - PI11</option>
+            <option value="266">Pin 24 - PI10</option>
+            <option value="270">Pin 26 - PI14</option>
+         </select>
+
+        <select type="text" id="node-input-pin4" style="width: 250px;" name="Banana M2+">
+            <option value='' disabled selected style='display:none;'>select pin</option>
+            <option value="12">Pin 3 - PA12</option>
+            <option value="11">Pin 5 - PA11</option>
+            <option value="6">Pin 7 - PA6</option>
+            <option value="13">Pin 8 - PA13</option>
+            <option value="14">Pin 10 - PA14</option>
+            <option value="1">Pin 11 - PA1</option>
+            <option value="16">Pin 12 - PA16</option>
+            <option value="0">Pin 13 - PA0</option>
+            <option value="3">Pin 15 - PA3</option>
+            <option value="15">Pin 16 - PA15</option>
+            <option value="68">Pin 18 - PC4</option>
+            <option value="64">Pin 19 - PC0</option>
+            <option value="65">Pin 21 - PC1</option>
+            <option value="2">Pin 22 - PA2</option>
+            <option value="66">Pin 23 - PC2</option>
+            <option value="67">Pin 24 - PC3</option>
+            <option value="71">Pin 26 - PC7</option>
+            <option value="19">Pin 27 - PA19</option>
+            <option value="18">Pin 28 - PA18</option>
+            <option value="7">Pin 29 - PA7</option>
+            <option value="8">Pin 31 - PA8</option>
+            <option value="354">Pin 32 - PL2</option>
+            <option value="9">Pin 33 - PA9</option>
+            <option value="10">Pin 35 - PA10</option>
+            <option value="356">Pin 36 - PL4</option>
+            <option value="17">Pin 37 - PA17</option>
+            <option value="21">Pin 38 - PA21</option>
+            <option value="20">Pin 40 - PA20</option>
+         </select>
+
+        <select type="text" id="node-input-pin5" style="width: 250px;" name="OrangePi Zero (plus)">
+            <option value='' disabled selected style='display:none;'>select pin</option>
+            <option value="12">Pin 3 - PA12</option>
+            <option value="11">Pin 5 - PA11</option>
+            <option value="6">Pin 7 - PA6</option>
+            <option value="198">Pin 8 - PG6</option>
+            <option value="199">Pin 10 - PG7</option>
+            <option value="1">Pin 11 - PA1</option>
+            <option value="7">Pin 12 - PA7</option>
+            <option value="0">Pin 13 - PA0</option>
+            <option value="3">Pin 15 - PA3</option>
+            <option value="19">Pin 16 - PA19</option>
+            <option value="18">Pin 18 - PA18</option>
+            <option value="15">Pin 19 - PA15</option>
+            <option value="16">Pin 21 - PA16</option>
+            <option value="2">Pin 22 - PA2</option>
+            <option value="14">Pin 23 - PA14</option>
+            <option value="13">Pin 24 - PA13</option>
+            <option value="10">Pin 26 - PA10</option>
+         </select>
+
+        <select type="text" id="node-input-pin6" style="width: 250px;" name="NanoPi Neo/Air">
+            <option value='' disabled selected style='display:none;'>select pin</option>
+            <option value="12">Pin 3 - PA12</option>
+            <option value="11">Pin 5 - PA11</option>
+            <option value="203">Pin 7 - PG11</option>
+            <option value="198">Pin 8 - PG6</option>
+            <option value="199">Pin 10 - PG7</option>
+            <option value="0">Pin 11 - PA0</option>
+            <option value="6">Pin 12 - PA6</option>
+            <option value="2">Pin 13 - PA2</option>
+            <option value="3">Pin 15 - PA3</option>
+            <option value="200">Pin 16 - PG8</option>
+            <option value="201">Pin 18 - PG9</option>
+            <option value="64">Pin 19 - PC0</option>
+            <option value="65">Pin 21 - PC1</option>
+            <option value="1">Pin 22 - PA1</option>
+            <option value="66">Pin 23 - PC2</option>
+            <option value="67">Pin 24 - PC3</option>
+            <option value="363">2nd connector Pin 6 - PL11</option>
+            <option value="17">2nd connector Pin 7 - PA17</option>
+            <option value="4">3rd connector Pin 3 - PA4</option>
+         </select>
+                  
+         <select type="text" id="node-input-pin7" style="width: 250px;" name="OrangePi Zero Plus 2 (H5)">
+            <option value='' disabled selected style='display:none;'>select pin</option>
+            <option value="12">Pin 3 - PA12</option>
+            <option value="11">Pin 5 - PA11</option>
+            <option value="6">Pin 7 - PA6</option>
+            <option value="0">Pin 8 - PA0</option>
+            <option value="1">Pin 10 - PA1</option>
+            <option value="352">Pin 11 - PL0</option>
+            <option value="107">Pin 12 - PA7</option>
+            <option value="353">Pin 13 - PL1</option>
+            <option value="3">Pin 15 - PA3</option>
+            <option value="19">Pin 16 - PA19</option>
+            <option value="18">Pin 18 - PA18</option>
+            <option value="15">Pin 19 - PA15</option>
+            <option value="16">Pin 21 - PA16</option>
+            <option value="2">Pin 22 - PA2</option>
+            <option value="14">Pin 23 - PA14</option>
+            <option value="13">Pin 24 - PA13</option>
+            <option value="110">Pin 26 - PD14</option>
+            <option value="17">Status LED - PA17</option>
+            <option value="362">PWR LED - PL10</option>
+         </select>
+         
+    </div>
+
+    <div class="form-row" id="node-set-enableLow">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-enableLow" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-enableLow" style="width: 70%;">Enable Active Low ?</label>
+    </div>
+    <div class="form-row" id="node-set-tick">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-set" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-set" style="width: 70%;">Initialise pin state ?</label>
+    </div>
+    <div class="form-row" id="node-set-state">
+        <label for="node-input-level">&nbsp;</label>
+        <select id="node-input-level" style="width: 250px;">
+            <option value="0"> low (0)</option>
+            <option value="1"> high (1)</option>
+        </select>
+    </div>
+  
+  
+</script>
+
+<script type="text/x-red" data-help-name="opi_out">
+    <p>GPIO output node for OrangePi and others..</p>
+    <p>All GPIO-pins are available, regardless of their multiplex functions.</p>
+    <p>Therefore, user is responsible to not disturb alternate pin functions.</p>
+    <p><code>msg.payload</code> should be set to 1 or 0.</p>
+</script>
+
+<script type="text/javascript">
+ RED.nodes.registerType('opi_out',{
+        category: 'Orange Pi',
+        color: '#FFCC66',
+        defaults: {
+            name: {value:""},
+            set: { value:false },
+            level: { value:0},
+            select: {value:"PC"},
+            pin: {value:""},
+	    enableLow: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        icon: "out.png",
+        paletteLabel:"output pin",
+        label: function() {
+            return this.name||"output pin";
+        },
+        oneditprepare: function() {
+            var pitype ;
+            var setstate = function () {
+                if ($('#node-input-set').is(":checked")) {
+                    $("#node-set-state").show();
+                } else {
+                    $("#node-set-state").hide();
+                }
+            };
+
+            $("#node-input-pin1").change(function() {                             // OP PC
+              if (pitype=='PC') {
+                var elt = document.getElementById("node-input-pin1");
+                var p=document.getElementById("node-input-pin");
+                p.value = elt.options[elt.selectedIndex].value;
+                var txt = elt.options[elt.selectedIndex].text;
+                elt = document.getElementById("node-input-name");
+                elt.value = txt;
+              }
+            });
+            $("#node-input-pin2").change(function() {                            // Other
+              if (pitype=="other") {
+                var n = Number(document.getElementById("node-input-pin2").value);
+                var elt = document.getElementById("node-input-name");
+                elt.value = "P"+String.fromCharCode(n/32+0x41)+n%32;
+                var p=document.getElementById("node-input-pin");
+                p.value=String(n);
+              }
+            });
+            $("#node-input-pin3").change(function() {                             // Banana M1
+              var elt = document.getElementById("node-input-pin3");
+              var p=document.getElementById("node-input-pin");
+              p.value = elt.options[elt.selectedIndex].value;
+              var txt = elt.options[elt.selectedIndex].text;
+              elt = document.getElementById("node-input-name");
+              elt.value = txt;
+            });
+            $("#node-input-pin4").change(function() {                             // Banana M2+
+              var elt = document.getElementById("node-input-pin4");
+              var p=document.getElementById("node-input-pin");
+              p.value = elt.options[elt.selectedIndex].value;
+              var txt = elt.options[elt.selectedIndex].text;
+              elt = document.getElementById("node-input-name");
+              elt.value = txt;
+            });
+            $("#node-input-pin5").change(function() {                             // Orange Pi Zero (plus)
+              var elt = document.getElementById("node-input-pin5");
+              var p=document.getElementById("node-input-pin");
+              p.value = elt.options[elt.selectedIndex].value;
+              var txt = elt.options[elt.selectedIndex].text;
+              elt = document.getElementById("node-input-name");
+              elt.value = txt;
+            });
+            $("#node-input-pin6").change(function() {                             // Nano Pi Neo
+              var elt = document.getElementById("node-input-pin6");
+              var p=document.getElementById("node-input-pin");
+              p.value = elt.options[elt.selectedIndex].value;
+              var txt = elt.options[elt.selectedIndex].text;
+              elt = document.getElementById("node-input-name");
+              elt.value = txt;
+            });
+            $("#node-input-pin7").change(function() {                             // Orange Pi Zero Plus 2 (H5)
+              var elt = document.getElementById("node-input-pin7");
+              var p=document.getElementById("node-input-pin");
+              p.value = elt.options[elt.selectedIndex].value;
+              var txt = elt.options[elt.selectedIndex].text;
+              elt = document.getElementById("node-input-name");
+              elt.value = txt;
+            });
+
+
+            var setPiType = function() {
+                pitype = (document.getElementById("node-input-select")).value;
+                switch (pitype) {
+                  case 'other':
+                    $('#node-input-pin1').hide();
+                    $('#node-input-pin3').hide();
+                    $('#node-input-pin4').hide();
+                    $('#node-input-pin5').hide();
+                    $('#node-input-pin6').hide();
+                    $('#node-input-pin2').show();
+                	$('#node-input-pin7').hide();
+                    $('#node-tip').show();
+                    var n = Number(document.getElementById("node-input-pin2").value);
+                    var elt = document.getElementById("node-input-name");
+                    elt.value = "P"+String.fromCharCode(n/32+0x41)+n%32;
+                    var p=document.getElementById("node-input-pin");
+                    p.value=String(n);
+                    break;
+                  case 'PC':
+                    $('#node-input-pin1').show();
+                    $('#node-input-pin2').hide();
+                    $('#node-input-pin3').hide();
+                    $('#node-input-pin4').hide();
+                    $('#node-input-pin5').hide();
+                    $('#node-input-pin6').hide();
+                	$('#node-input-pin7').hide();
+                    $('#node-tip').hide();
+                    break;
+                  case 'M1':
+                    $('#node-input-pin1').hide();
+                    $('#node-input-pin2').hide();
+                    $('#node-input-pin3').show();
+                    $('#node-input-pin4').hide();
+                    $('#node-input-pin5').hide();
+                    $('#node-input-pin6').hide();
+                	$('#node-input-pin7').hide();
+                    $('#node-tip').hide();
+                    break;
+                  case 'M2p':
+                    $('#node-input-pin1').hide();
+                    $('#node-input-pin2').hide();
+                    $('#node-input-pin3').hide();
+                    $('#node-input-pin4').show();
+                    $('#node-input-pin5').hide();
+                    $('#node-input-pin6').hide();
+                	$('#node-input-pin7').hide();
+                    $('#node-tip').hide();
+                    break;
+                  case 'OPZ':
+                    $('#node-input-pin1').hide();
+                    $('#node-input-pin2').hide();
+                    $('#node-input-pin3').hide();
+                    $('#node-input-pin4').hide();
+                    $('#node-input-pin5').show();
+                    $('#node-input-pin6').hide();
+                	$('#node-input-pin7').hide();
+                    $('#node-tip').hide();
+                    break;
+                  case 'Neo':
+                    $('#node-input-pin1').hide();
+                    $('#node-input-pin2').hide();
+                    $('#node-input-pin3').hide();
+                    $('#node-input-pin4').hide();
+                    $('#node-input-pin5').hide();
+                    $('#node-input-pin6').show();
+                	$('#node-input-pin7').hide();
+                    $('#node-tip').hide();
+                    break;
+                  case 'OPZP2':
+                    $('#node-input-pin1').hide();
+                    $('#node-input-pin2').hide();
+                    $('#node-input-pin3').hide();
+                    $('#node-input-pin4').hide();
+                    $('#node-input-pin5').hide();
+                    $('#node-input-pin6').hide();
+                    $('#node-input-pin7').show();
+                    $('#node-tip').hide();
+                    break;
+                }
+            };
+
+            $("#node-input-set").change(function () { setstate(); });
+            setstate();
+            $('#node-input-select').change(function(){setPiType();});
+            setPiType();
+        }
+  });    
+</script>
