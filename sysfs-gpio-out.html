@@ -21,18 +21,18 @@
          <br>
         <input type="hidden" id="node-input-pin">               <!-- This is the place where phys. pin number is stored  -->
         <label for="node-input-pin-user"><i class="fa fa-tag"></i>Output Pin</label> 
-        <input type="text" id="node-input-pin-user" style="width: 50px;" value="0" name="sysfs">
+        <input type="text" id="node-input-pin-user" value="0" name="sysfs">
     </div>
 
     <div class="form-row" id="node-set-enableLow">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-enableLow" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-enableLow" style="width: 70%;">Enable Active Low ?</label>
+        <label for="node-input-enableLow" style="width: 70%;">Enable Active Low</label>
     </div>
     <div class="form-row" id="node-set-tick">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-set" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-set" style="width: 70%;">Initialise pin state ?</label>
+        <label for="node-input-set" style="width: 70%;">Initialize Pin State</label>
     </div>
     <div class="form-row" id="node-set-state">
         <label for="node-input-level">&nbsp;</label>
@@ -72,7 +72,6 @@
             return this.name||"output pin";
         },
         oneditprepare: function() {
-            var pinFormat ;
             var setstate = function () {
                 if ($('#node-input-set').is(":checked")) {
                     $("#node-set-state").show();
@@ -81,45 +80,52 @@
                 }
             };
             $("#node-input-pin-user").change(function() {
-              var userPin = $("#node-input-pin-user");
-              var sysfsPin = $("#node-input-pin");
+              var pinFormat = $("#node-input-format")[0].value;
+              var userPin = $("#node-input-pin-user")[0];
+              var sysfsPin = $("#node-input-pin")[0];
               switch (pinFormat) {
                 case 'sysfs':
-                  var n = Number(userPin.value);
+                  $('#node-tip-rockchip').hide();
+                  var n = parseInt(userPin.value);
                   sysfsPin.value=String(n);
                   break;
                 
                 case 'rockchip':
                   var re=/GPIO([0-9])_([A-H])([0-7])/
-                  var regexSplit = userPin.value.exec(re);
+                  var regexSplit = re.exec(userPin.value);
                   if (regexSplit == null)
                     $('#node-tip-rockchip').show();
                   else
-                    $('#node-tip-rockchip').show();
+                    $('#node-tip-rockchip').hide();
 
-                  var n = Number(regexSplit[1]) * 32 + (regexSplit[2].charCodeAt(0) - 65) * 8 + regexSplit[3];
+                  var n = Number(regexSplit[1]) * 32 + (regexSplit[2].charCodeAt(0) - 65) * 8 + Number(regexSplit[3]);
 
                   sysfsPin.value=String(n);
               }
-
             });
 
-
-
             var setPinFormat = function() {
-                pinFormat = ($("#node-input-format")).value;
-                var sysfsPin = $("#node-input-pin");
-                var userPin = $("#node-input-pin-user");
-                switch (pinFormat) {
-                  case 'sysfs':
-                    userPin.value = sysfsPin.value;
-                    break;
-                  case 'rockchip':
-                    var n = Number(sysfsPin.value);
-                    var x = (n % 32) / 8;
-                    userPin.value = "GPIO" + (n / 32) + "_" + String.fromCharCode(x + 65) + (n / 8);
-                    break;
-                }
+              var pinFormat = $("#node-input-format")[0].value;
+              var sysfsPin = $("#node-input-pin")[0];
+              var userPin = $("#node-input-pin-user")[0];
+              $('#node-tip-rockchip').hide();
+              switch (pinFormat) {
+                case 'sysfs':
+                  userPin.value = sysfsPin.value;
+                  break;
+                case 'rockchip':
+                  var n = parseInt(sysfsPin.value);
+                  if (isNaN(n))
+                  {
+                    userPin.value = "";
+                  } 
+                  else
+                  {
+                    var x = Math.floor((n % 32) / 8);
+                    userPin.value = "GPIO" + Math.floor(n / 32) + "_" + String.fromCharCode(x + 65) + (n % 8);
+                  }
+                  break;   
+              }
             };
 
             $("#node-input-set").change(function () { setstate(); });
